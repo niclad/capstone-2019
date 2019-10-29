@@ -1,17 +1,7 @@
-asn1crypto==0.24.0
-cryptography==2.1.4
 enum34==1.1.6
-idna==2.6
-ipaddress==1.0.17
-keyring==10.6.0
-keyrings.alt==3.0
 numpy==1.16.5
-pycrypto==2.6.1
 pygame==1.9.6
 pygobject==3.26.1
 pyserial==3.4
 python-xlib==0.25
 PyUserInput==0.1.11
-pyxdg==0.25
-SecretStorage==2.3.1
-six==1.11.0
