@@ -430,11 +430,11 @@ if __name__ == '__main__':
     dt = yr + mo + day + hr + mn
 
     # open csvfile
-    fileName = 'emg_data_' + dt + '.csv'
-    csvFile = open(fileName, 'wb')
-    filewriter = csv.writer(csvFile, delimiter = ',')
-    emgNum = ['emg01', 'emg02', 'emg03', 'emg04', 'emg05', 'emg06', 'emg07', 'emg08']
-    filewriter.writerow(emgNum)
+    fileName = 'emg_data_' + dt + '.csv'    # name the file
+    csvFile = open(fileName, 'wb')          # open the file
+    filewriter = csv.writer(csvFile, delimiter = ',')   #  create a csv instance
+    emgNum = ['time(s)', 'emg01', 'emg02', 'emg03', 'emg04', 'emg05', 'emg06', 'emg07', 'emg08'] # column titles
+    filewriter.writerow(emgNum)             # write the column titles to the file
 
     last_vals = None
     def plot(scr, vals):
@@ -465,8 +465,14 @@ if __name__ == '__main__':
 
     m = MyoRaw(sys.argv[1] if len(sys.argv) >= 2 else None)
 
+    # start a timer - this is program time
+    # (ie the total time since script started running)
+    time_start = time.time()
+
     def proc_emg(emg, moving, times=[]):
         emgVals = []
+        curr_time = time.time() - time_start    # calculate the time since start
+        emgVals.append(curr_time)
         for e in emg:
             emgVals.append(e)
         filewriter.writerow(emgVals)
