@@ -94,8 +94,8 @@ had the chance to tinker with it yet.
 
 ### To-do list:
 
--[ ] Get grip outputs
--[ ] Fix data format to be compatible with SciKit
+[ ] Get grip outputs
+[ ] Fix data format to be compatible with SciKit
 
 ## [myo.py](myo.py) (Myo library with built-in classifier and pose event handlers)
 
