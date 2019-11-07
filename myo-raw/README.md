@@ -68,6 +68,10 @@ classification onboard, and returns that information. Use MyoRaw.add_arm_handler
 and MyoRaw.add_pose_handler. Note that you will need to perform the sync gesture
 after starting the program (the Myo will vibrate as normal when it is synced).
 
+### How to use:
+
+myo_raw.py will save the EMG data from the Myoband to a CSV file. The data (see the below note) is an RMS signal of the *raw* EMG data. When the script is started, data collection will start immidiately, keeping the values read for time and EMG sensors 1-8 in their own columns.
+
 *As far as I can tell, the raw data seems to processed in a way that it's being sent from the Myo as RMS'd. At this moment (2019-10-29), I'm not sure how to get around this. In any case, custom grips can be trained using [classify_myo.py](classify_myo.py).*
 
 ## [classify_myo.py](classify_myo.py) (example pose classification and training program)
@@ -87,6 +91,11 @@ This method works fine as long as the Myo isn't moved, but, in my experience, it
 takes quite a large amount of training data to handle different positions
 well. Of course, the classifier could be made much, much smarter, but I haven't
 had the chance to tinker with it yet.
+
+### To-do list:
+
+-[ ] Get grip outputs
+-[ ] Fix data format to be compatible with SciKit
 
 ## [myo.py](myo.py) (Myo library with built-in classifier and pose event handlers)
 
@@ -114,3 +123,4 @@ Tips for classification:
   Myo Connect
 - classify_myo.py segfaults on exit under certain circumstances (probably
   related to Pygame version)
+ 
