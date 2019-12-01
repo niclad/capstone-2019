@@ -4,8 +4,11 @@ from collections import Counter
 import struct
 import sys
 import time
-
 import numpy as np
+
+# import the Grip class
+sys.path.insert(1, '../misc/')
+from Grip import Grip
 
 try:
     from sklearn import neighbors, svm
