@@ -1,0 +1,934 @@
+Training:
+	Plug in myoband bluetooth usb
+	Put on myoband
+	Run "python3 classify_myo.py"
+	Make gesture while holding key number 0-9 to save gesture
+	press q to quit.
+
+Gestures:
+	0 - close (Touch finger tips together)
+	1 - rest  (Relaxed fingers)
+	2 - open  (Spread fingers)
+	3 - pinch (Middle and pointer against thumb)
+	4 - fist  (All fingers closed and curled)
+
+Check Camera Works (Take screenshot):
+	nvgstcapture -A -C 1 --capture-auto --image-res=4
+
+Debug script:
+	python3 -m trace --trace classify_myo.py
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+myo_raw.py(118):         return None
+myo_raw.py(88):             if ret:
+myo_raw.py(82):         while timeout is None or time.time() < t0 + timeout:
+myo_raw.py(83):             if timeout is not None: self.ser.timeout = t0 + timeout - time.time()
+myo_raw.py(84):             c = self.ser.read()
+ --- modulename: serialposix, funcname: read
+serialposix.py(477):         if not self.is_open:
+serialposix.py(479):         read = bytearray()
+serialposix.py(480):         timeout = Timeout(self._timeout)
+ --- modulename: serialutil, funcname: __init__
+serialutil.py(125):         self.is_infinite = (duration is None)
+serialutil.py(126):         self.is_non_blocking = (duration == 0)
+serialutil.py(127):         self.duration = duration
+serialutil.py(128):         if duration is not None:
+serialutil.py(131):             self.target_time = None
+serialposix.py(481):         while len(read) < size:
+serialposix.py(482):             try:
+serialposix.py(483):                 ready, _, _ = select.select([self.fd, self.pipe_abort_read_r], [], [], timeout.time_left())
+ --- modulename: serialutil, funcname: time_left
+serialutil.py(139):         if self.is_non_blocking:
+serialutil.py(141):         elif self.is_infinite:
+serialutil.py(142):             return None
+serialposix.py(484):                 if self.pipe_abort_read_r in ready:
+serialposix.py(491):                 if not ready:
+serialposix.py(493):                 buf = os.read(self.fd, size - len(read))
+serialposix.py(496):                 if not buf:
+serialposix.py(503):                 read.extend(buf)
+serialposix.py(516):             if timeout.expired():
+ --- modulename: serialutil, funcname: expired
+serialutil.py(135):         return self.target_time is not None and self.time_left() <= 0
+serialposix.py(481):         while len(read) < size:
+serialposix.py(518):         return bytes(read)
+myo_raw.py(85):             if not c: return None
+myo_raw.py(87):             ret = self.proc_byte(ord(c))
+ --- modulename: myo_raw, funcname: proc_byte
+myo_raw.py(103):         if not self.buf:
+myo_raw.py(107):         elif len(self.buf) == 1:
+myo_raw.py(112):             self.buf.append(c)
+myo_raw.py(114):         if self.packet_len and len(self.buf) == self.packet_len:
+myo_raw.py(118):         return None
+myo_raw.py(88):             if ret:
+myo_raw.py(82):         while timeout is None or time.time() < t0 + timeout:
+myo_raw.py(83):             if timeout is not None: self.ser.timeout = t0 + timeout - time.time()
+myo_raw.py(84):             c = self.ser.read()
+ --- modulename: serialposix, funcname: read
+serialposix.py(477):         if not self.is_open:
+serialposix.py(479):         read = bytearray()
+serialposix.py(480):         timeout = Timeout(self._timeout)
+ --- modulename: serialutil, funcname: __init__
+serialutil.py(125):         self.is_infinite = (duration is None)
+serialutil.py(126):         self.is_non_blocking = (duration == 0)
+serialutil.py(127):         self.duration = duration
+serialutil.py(128):         if duration is not None:
+serialutil.py(131):             self.target_time = None
+serialposix.py(481):         while len(read) < size:
+serialposix.py(482):             try:
+serialposix.py(483):                 ready, _, _ = select.select([self.fd, self.pipe_abort_read_r], [], [], timeout.time_left())
+ --- modulename: serialutil, funcname: time_left
+serialutil.py(139):         if self.is_non_blocking:
+serialutil.py(141):         elif self.is_infinite:
+serialutil.py(142):             return None
+serialposix.py(484):                 if self.pipe_abort_read_r in ready:
+serialposix.py(491):                 if not ready:
+serialposix.py(493):                 buf = os.read(self.fd, size - len(read))
+serialposix.py(496):                 if not buf:
+serialposix.py(503):                 read.extend(buf)
+serialposix.py(516):             if timeout.expired():
+ --- modulename: serialutil, funcname: expired
+serialutil.py(135):         return self.target_time is not None and self.time_left() <= 0
+serialposix.py(481):         while len(read) < size:
+serialposix.py(518):         return bytes(read)
+myo_raw.py(85):             if not c: return None
+myo_raw.py(87):             ret = self.proc_byte(ord(c))
+ --- modulename: myo_raw, funcname: proc_byte
+myo_raw.py(103):         if not self.buf:
+myo_raw.py(107):         elif len(self.buf) == 1:
+myo_raw.py(112):             self.buf.append(c)
+myo_raw.py(114):         if self.packet_len and len(self.buf) == self.packet_len:
+myo_raw.py(118):         return None
+myo_raw.py(88):             if ret:
+myo_raw.py(82):         while timeout is None or time.time() < t0 + timeout:
+myo_raw.py(83):             if timeout is not None: self.ser.timeout = t0 + timeout - time.time()
+myo_raw.py(84):             c = self.ser.read()
+ --- modulename: serialposix, funcname: read
+serialposix.py(477):         if not self.is_open:
+serialposix.py(479):         read = bytearray()
+serialposix.py(480):         timeout = Timeout(self._timeout)
+ --- modulename: serialutil, funcname: __init__
+serialutil.py(125):         self.is_infinite = (duration is None)
+serialutil.py(126):         self.is_non_blocking = (duration == 0)
+serialutil.py(127):         self.duration = duration
+serialutil.py(128):         if duration is not None:
+serialutil.py(131):             self.target_time = None
+serialposix.py(481):         while len(read) < size:
+serialposix.py(482):             try:
+serialposix.py(483):                 ready, _, _ = select.select([self.fd, self.pipe_abort_read_r], [], [], timeout.time_left())
+ --- modulename: serialutil, funcname: time_left
+serialutil.py(139):         if self.is_non_blocking:
+serialutil.py(141):         elif self.is_infinite:
+serialutil.py(142):             return None
+serialposix.py(484):                 if self.pipe_abort_read_r in ready:
+serialposix.py(491):                 if not ready:
+serialposix.py(493):                 buf = os.read(self.fd, size - len(read))
+serialposix.py(496):                 if not buf:
+serialposix.py(503):                 read.extend(buf)
+serialposix.py(516):             if timeout.expired():
+ --- modulename: serialutil, funcname: expired
+serialutil.py(135):         return self.target_time is not None and self.time_left() <= 0
+serialposix.py(481):         while len(read) < size:
+serialposix.py(518):         return bytes(read)
+myo_raw.py(85):             if not c: return None
+myo_raw.py(87):             ret = self.proc_byte(ord(c))
+ --- modulename: myo_raw, funcname: proc_byte
+myo_raw.py(103):         if not self.buf:
+myo_raw.py(107):         elif len(self.buf) == 1:
+myo_raw.py(112):             self.buf.append(c)
+myo_raw.py(114):         if self.packet_len and len(self.buf) == self.packet_len:
+myo_raw.py(118):         return None
+myo_raw.py(88):             if ret:
+myo_raw.py(82):         while timeout is None or time.time() < t0 + timeout:
+myo_raw.py(83):             if timeout is not None: self.ser.timeout = t0 + timeout - time.time()
+myo_raw.py(84):             c = self.ser.read()
+ --- modulename: serialposix, funcname: read
+serialposix.py(477):         if not self.is_open:
+serialposix.py(479):         read = bytearray()
+serialposix.py(480):         timeout = Timeout(self._timeout)
+ --- modulename: serialutil, funcname: __init__
+serialutil.py(125):         self.is_infinite = (duration is None)
+serialutil.py(126):         self.is_non_blocking = (duration == 0)
+serialutil.py(127):         self.duration = duration
+serialutil.py(128):         if duration is not None:
+serialutil.py(131):             self.target_time = None
+serialposix.py(481):         while len(read) < size:
+serialposix.py(482):             try:
+serialposix.py(483):                 ready, _, _ = select.select([self.fd, self.pipe_abort_read_r], [], [], timeout.time_left())
+ --- modulename: serialutil, funcname: time_left
+serialutil.py(139):         if self.is_non_blocking:
+serialutil.py(141):         elif self.is_infinite:
+serialutil.py(142):             return None
+serialposix.py(484):                 if self.pipe_abort_read_r in ready:
+serialposix.py(491):                 if not ready:
+serialposix.py(493):                 buf = os.read(self.fd, size - len(read))
+serialposix.py(496):                 if not buf:
+serialposix.py(503):                 read.extend(buf)
+serialposix.py(516):             if timeout.expired():
+ --- modulename: serialutil, funcname: expired
+serialutil.py(135):         return self.target_time is not None and self.time_left() <= 0
+serialposix.py(481):         while len(read) < size:
+serialposix.py(518):         return bytes(read)
+myo_raw.py(85):             if not c: return None
+myo_raw.py(87):             ret = self.proc_byte(ord(c))
+ --- modulename: myo_raw, funcname: proc_byte
+myo_raw.py(103):         if not self.buf:
+myo_raw.py(107):         elif len(self.buf) == 1:
+myo_raw.py(112):             self.buf.append(c)
+myo_raw.py(114):         if self.packet_len and len(self.buf) == self.packet_len:
+myo_raw.py(118):         return None
+myo_raw.py(88):             if ret:
+myo_raw.py(82):         while timeout is None or time.time() < t0 + timeout:
+myo_raw.py(83):             if timeout is not None: self.ser.timeout = t0 + timeout - time.time()
+myo_raw.py(84):             c = self.ser.read()
+ --- modulename: serialposix, funcname: read
+serialposix.py(477):         if not self.is_open:
+serialposix.py(479):         read = bytearray()
+serialposix.py(480):         timeout = Timeout(self._timeout)
+ --- modulename: serialutil, funcname: __init__
+serialutil.py(125):         self.is_infinite = (duration is None)
+serialutil.py(126):         self.is_non_blocking = (duration == 0)
+serialutil.py(127):         self.duration = duration
+serialutil.py(128):         if duration is not None:
+serialutil.py(131):             self.target_time = None
+serialposix.py(481):         while len(read) < size:
+serialposix.py(482):             try:
+serialposix.py(483):                 ready, _, _ = select.select([self.fd, self.pipe_abort_read_r], [], [], timeout.time_left())
+ --- modulename: serialutil, funcname: time_left
+serialutil.py(139):         if self.is_non_blocking:
+serialutil.py(141):         elif self.is_infinite:
+serialutil.py(142):             return None
+serialposix.py(484):                 if self.pipe_abort_read_r in ready:
+serialposix.py(491):                 if not ready:
+serialposix.py(493):                 buf = os.read(self.fd, size - len(read))
+serialposix.py(496):                 if not buf:
+serialposix.py(503):                 read.extend(buf)
+serialposix.py(516):             if timeout.expired():
+ --- modulename: serialutil, funcname: expired
+serialutil.py(135):         return self.target_time is not None and self.time_left() <= 0
+serialposix.py(481):         while len(read) < size:
+serialposix.py(518):         return bytes(read)
+myo_raw.py(85):             if not c: return None
+myo_raw.py(87):             ret = self.proc_byte(ord(c))
+ --- modulename: myo_raw, funcname: proc_byte
+myo_raw.py(103):         if not self.buf:
+myo_raw.py(107):         elif len(self.buf) == 1:
+myo_raw.py(112):             self.buf.append(c)
+myo_raw.py(114):         if self.packet_len and len(self.buf) == self.packet_len:
+myo_raw.py(118):         return None
+myo_raw.py(88):             if ret:
+myo_raw.py(82):         while timeout is None or time.time() < t0 + timeout:
+myo_raw.py(83):             if timeout is not None: self.ser.timeout = t0 + timeout - time.time()
+myo_raw.py(84):             c = self.ser.read()
+ --- modulename: serialposix, funcname: read
+serialposix.py(477):         if not self.is_open:
+serialposix.py(479):         read = bytearray()
+serialposix.py(480):         timeout = Timeout(self._timeout)
+ --- modulename: serialutil, funcname: __init__
+serialutil.py(125):         self.is_infinite = (duration is None)
+serialutil.py(126):         self.is_non_blocking = (duration == 0)
+serialutil.py(127):         self.duration = duration
+serialutil.py(128):         if duration is not None:
+serialutil.py(131):             self.target_time = None
+serialposix.py(481):         while len(read) < size:
+serialposix.py(482):             try:
+serialposix.py(483):                 ready, _, _ = select.select([self.fd, self.pipe_abort_read_r], [], [], timeout.time_left())
+ --- modulename: serialutil, funcname: time_left
+serialutil.py(139):         if self.is_non_blocking:
+serialutil.py(141):         elif self.is_infinite:
+serialutil.py(142):             return None
+serialposix.py(484):                 if self.pipe_abort_read_r in ready:
+serialposix.py(491):                 if not ready:
+serialposix.py(493):                 buf = os.read(self.fd, size - len(read))
+serialposix.py(496):                 if not buf:
+serialposix.py(503):                 read.extend(buf)
+serialposix.py(516):             if timeout.expired():
+ --- modulename: serialutil, funcname: expired
+serialutil.py(135):         return self.target_time is not None and self.time_left() <= 0
+serialposix.py(481):         while len(read) < size:
+serialposix.py(518):         return bytes(read)
+myo_raw.py(85):             if not c: return None
+myo_raw.py(87):             ret = self.proc_byte(ord(c))
+ --- modulename: myo_raw, funcname: proc_byte
+myo_raw.py(103):         if not self.buf:
+myo_raw.py(107):         elif len(self.buf) == 1:
+myo_raw.py(112):             self.buf.append(c)
+myo_raw.py(114):         if self.packet_len and len(self.buf) == self.packet_len:
+myo_raw.py(118):         return None
+myo_raw.py(88):             if ret:
+myo_raw.py(82):         while timeout is None or time.time() < t0 + timeout:
+myo_raw.py(83):             if timeout is not None: self.ser.timeout = t0 + timeout - time.time()
+myo_raw.py(84):             c = self.ser.read()
+ --- modulename: serialposix, funcname: read
+serialposix.py(477):         if not self.is_open:
+serialposix.py(479):         read = bytearray()
+serialposix.py(480):         timeout = Timeout(self._timeout)
+ --- modulename: serialutil, funcname: __init__
+serialutil.py(125):         self.is_infinite = (duration is None)
+serialutil.py(126):         self.is_non_blocking = (duration == 0)
+serialutil.py(127):         self.duration = duration
+serialutil.py(128):         if duration is not None:
+serialutil.py(131):             self.target_time = None
+serialposix.py(481):         while len(read) < size:
+serialposix.py(482):             try:
+serialposix.py(483):                 ready, _, _ = select.select([self.fd, self.pipe_abort_read_r], [], [], timeout.time_left())
+ --- modulename: serialutil, funcname: time_left
+serialutil.py(139):         if self.is_non_blocking:
+serialutil.py(141):         elif self.is_infinite:
+serialutil.py(142):             return None
+serialposix.py(484):                 if self.pipe_abort_read_r in ready:
+serialposix.py(491):                 if not ready:
+serialposix.py(493):                 buf = os.read(self.fd, size - len(read))
+serialposix.py(496):                 if not buf:
+serialposix.py(503):                 read.extend(buf)
+serialposix.py(516):             if timeout.expired():
+ --- modulename: serialutil, funcname: expired
+serialutil.py(135):         return self.target_time is not None and self.time_left() <= 0
+serialposix.py(481):         while len(read) < size:
+serialposix.py(518):         return bytes(read)
+myo_raw.py(85):             if not c: return None
+myo_raw.py(87):             ret = self.proc_byte(ord(c))
+ --- modulename: myo_raw, funcname: proc_byte
+myo_raw.py(103):         if not self.buf:
+myo_raw.py(107):         elif len(self.buf) == 1:
+myo_raw.py(112):             self.buf.append(c)
+myo_raw.py(114):         if self.packet_len and len(self.buf) == self.packet_len:
+myo_raw.py(118):         return None
+myo_raw.py(88):             if ret:
+myo_raw.py(82):         while timeout is None or time.time() < t0 + timeout:
+myo_raw.py(83):             if timeout is not None: self.ser.timeout = t0 + timeout - time.time()
+myo_raw.py(84):             c = self.ser.read()
+ --- modulename: serialposix, funcname: read
+serialposix.py(477):         if not self.is_open:
+serialposix.py(479):         read = bytearray()
+serialposix.py(480):         timeout = Timeout(self._timeout)
+ --- modulename: serialutil, funcname: __init__
+serialutil.py(125):         self.is_infinite = (duration is None)
+serialutil.py(126):         self.is_non_blocking = (duration == 0)
+serialutil.py(127):         self.duration = duration
+serialutil.py(128):         if duration is not None:
+serialutil.py(131):             self.target_time = None
+serialposix.py(481):         while len(read) < size:
+serialposix.py(482):             try:
+serialposix.py(483):                 ready, _, _ = select.select([self.fd, self.pipe_abort_read_r], [], [], timeout.time_left())
+ --- modulename: serialutil, funcname: time_left
+serialutil.py(139):         if self.is_non_blocking:
+serialutil.py(141):         elif self.is_infinite:
+serialutil.py(142):             return None
+serialposix.py(484):                 if self.pipe_abort_read_r in ready:
+serialposix.py(491):                 if not ready:
+serialposix.py(493):                 buf = os.read(self.fd, size - len(read))
+serialposix.py(496):                 if not buf:
+serialposix.py(503):                 read.extend(buf)
+serialposix.py(516):             if timeout.expired():
+ --- modulename: serialutil, funcname: expired
+serialutil.py(135):         return self.target_time is not None and self.time_left() <= 0
+serialposix.py(481):         while len(read) < size:
+serialposix.py(518):         return bytes(read)
+myo_raw.py(85):             if not c: return None
+myo_raw.py(87):             ret = self.proc_byte(ord(c))
+ --- modulename: myo_raw, funcname: proc_byte
+myo_raw.py(103):         if not self.buf:
+myo_raw.py(107):         elif len(self.buf) == 1:
+myo_raw.py(112):             self.buf.append(c)
+myo_raw.py(114):         if self.packet_len and len(self.buf) == self.packet_len:
+myo_raw.py(118):         return None
+myo_raw.py(88):             if ret:
+myo_raw.py(82):         while timeout is None or time.time() < t0 + timeout:
+myo_raw.py(83):             if timeout is not None: self.ser.timeout = t0 + timeout - time.time()
+myo_raw.py(84):             c = self.ser.read()
+ --- modulename: serialposix, funcname: read
+serialposix.py(477):         if not self.is_open:
+serialposix.py(479):         read = bytearray()
+serialposix.py(480):         timeout = Timeout(self._timeout)
+ --- modulename: serialutil, funcname: __init__
+serialutil.py(125):         self.is_infinite = (duration is None)
+serialutil.py(126):         self.is_non_blocking = (duration == 0)
+serialutil.py(127):         self.duration = duration
+serialutil.py(128):         if duration is not None:
+serialutil.py(131):             self.target_time = None
+serialposix.py(481):         while len(read) < size:
+serialposix.py(482):             try:
+serialposix.py(483):                 ready, _, _ = select.select([self.fd, self.pipe_abort_read_r], [], [], timeout.time_left())
+ --- modulename: serialutil, funcname: time_left
+serialutil.py(139):         if self.is_non_blocking:
+serialutil.py(141):         elif self.is_infinite:
+serialutil.py(142):             return None
+serialposix.py(484):                 if self.pipe_abort_read_r in ready:
+serialposix.py(491):                 if not ready:
+serialposix.py(493):                 buf = os.read(self.fd, size - len(read))
+serialposix.py(496):                 if not buf:
+serialposix.py(503):                 read.extend(buf)
+serialposix.py(516):             if timeout.expired():
+ --- modulename: serialutil, funcname: expired
+serialutil.py(135):         return self.target_time is not None and self.time_left() <= 0
+serialposix.py(481):         while len(read) < size:
+serialposix.py(518):         return bytes(read)
+myo_raw.py(85):             if not c: return None
+myo_raw.py(87):             ret = self.proc_byte(ord(c))
+ --- modulename: myo_raw, funcname: proc_byte
+myo_raw.py(103):         if not self.buf:
+myo_raw.py(107):         elif len(self.buf) == 1:
+myo_raw.py(112):             self.buf.append(c)
+myo_raw.py(114):         if self.packet_len and len(self.buf) == self.packet_len:
+myo_raw.py(118):         return None
+myo_raw.py(88):             if ret:
+myo_raw.py(82):         while timeout is None or time.time() < t0 + timeout:
+myo_raw.py(83):             if timeout is not None: self.ser.timeout = t0 + timeout - time.time()
+myo_raw.py(84):             c = self.ser.read()
+ --- modulename: serialposix, funcname: read
+serialposix.py(477):         if not self.is_open:
+serialposix.py(479):         read = bytearray()
+serialposix.py(480):         timeout = Timeout(self._timeout)
+ --- modulename: serialutil, funcname: __init__
+serialutil.py(125):         self.is_infinite = (duration is None)
+serialutil.py(126):         self.is_non_blocking = (duration == 0)
+serialutil.py(127):         self.duration = duration
+serialutil.py(128):         if duration is not None:
+serialutil.py(131):             self.target_time = None
+serialposix.py(481):         while len(read) < size:
+serialposix.py(482):             try:
+serialposix.py(483):                 ready, _, _ = select.select([self.fd, self.pipe_abort_read_r], [], [], timeout.time_left())
+ --- modulename: serialutil, funcname: time_left
+serialutil.py(139):         if self.is_non_blocking:
+serialutil.py(141):         elif self.is_infinite:
+serialutil.py(142):             return None
+serialposix.py(484):                 if self.pipe_abort_read_r in ready:
+serialposix.py(491):                 if not ready:
+serialposix.py(493):                 buf = os.read(self.fd, size - len(read))
+serialposix.py(496):                 if not buf:
+serialposix.py(503):                 read.extend(buf)
+serialposix.py(516):             if timeout.expired():
+ --- modulename: serialutil, funcname: expired
+serialutil.py(135):         return self.target_time is not None and self.time_left() <= 0
+serialposix.py(481):         while len(read) < size:
+serialposix.py(518):         return bytes(read)
+myo_raw.py(85):             if not c: return None
+myo_raw.py(87):             ret = self.proc_byte(ord(c))
+ --- modulename: myo_raw, funcname: proc_byte
+myo_raw.py(103):         if not self.buf:
+myo_raw.py(107):         elif len(self.buf) == 1:
+myo_raw.py(112):             self.buf.append(c)
+myo_raw.py(114):         if self.packet_len and len(self.buf) == self.packet_len:
+myo_raw.py(118):         return None
+myo_raw.py(88):             if ret:
+myo_raw.py(82):         while timeout is None or time.time() < t0 + timeout:
+myo_raw.py(83):             if timeout is not None: self.ser.timeout = t0 + timeout - time.time()
+myo_raw.py(84):             c = self.ser.read()
+ --- modulename: serialposix, funcname: read
+serialposix.py(477):         if not self.is_open:
+serialposix.py(479):         read = bytearray()
+serialposix.py(480):         timeout = Timeout(self._timeout)
+ --- modulename: serialutil, funcname: __init__
+serialutil.py(125):         self.is_infinite = (duration is None)
+serialutil.py(126):         self.is_non_blocking = (duration == 0)
+serialutil.py(127):         self.duration = duration
+serialutil.py(128):         if duration is not None:
+serialutil.py(131):             self.target_time = None
+serialposix.py(481):         while len(read) < size:
+serialposix.py(482):             try:
+serialposix.py(483):                 ready, _, _ = select.select([self.fd, self.pipe_abort_read_r], [], [], timeout.time_left())
+ --- modulename: serialutil, funcname: time_left
+serialutil.py(139):         if self.is_non_blocking:
+serialutil.py(141):         elif self.is_infinite:
+serialutil.py(142):             return None
+serialposix.py(484):                 if self.pipe_abort_read_r in ready:
+serialposix.py(491):                 if not ready:
+serialposix.py(493):                 buf = os.read(self.fd, size - len(read))
+serialposix.py(496):                 if not buf:
+serialposix.py(503):                 read.extend(buf)
+serialposix.py(516):             if timeout.expired():
+ --- modulename: serialutil, funcname: expired
+serialutil.py(135):         return self.target_time is not None and self.time_left() <= 0
+serialposix.py(481):         while len(read) < size:
+serialposix.py(518):         return bytes(read)
+myo_raw.py(85):             if not c: return None
+myo_raw.py(87):             ret = self.proc_byte(ord(c))
+ --- modulename: myo_raw, funcname: proc_byte
+myo_raw.py(103):         if not self.buf:
+myo_raw.py(107):         elif len(self.buf) == 1:
+myo_raw.py(112):             self.buf.append(c)
+myo_raw.py(114):         if self.packet_len and len(self.buf) == self.packet_len:
+myo_raw.py(118):         return None
+myo_raw.py(88):             if ret:
+myo_raw.py(82):         while timeout is None or time.time() < t0 + timeout:
+myo_raw.py(83):             if timeout is not None: self.ser.timeout = t0 + timeout - time.time()
+myo_raw.py(84):             c = self.ser.read()
+ --- modulename: serialposix, funcname: read
+serialposix.py(477):         if not self.is_open:
+serialposix.py(479):         read = bytearray()
+serialposix.py(480):         timeout = Timeout(self._timeout)
+ --- modulename: serialutil, funcname: __init__
+serialutil.py(125):         self.is_infinite = (duration is None)
+serialutil.py(126):         self.is_non_blocking = (duration == 0)
+serialutil.py(127):         self.duration = duration
+serialutil.py(128):         if duration is not None:
+serialutil.py(131):             self.target_time = None
+serialposix.py(481):         while len(read) < size:
+serialposix.py(482):             try:
+serialposix.py(483):                 ready, _, _ = select.select([self.fd, self.pipe_abort_read_r], [], [], timeout.time_left())
+ --- modulename: serialutil, funcname: time_left
+serialutil.py(139):         if self.is_non_blocking:
+serialutil.py(141):         elif self.is_infinite:
+serialutil.py(142):             return None
+serialposix.py(484):                 if self.pipe_abort_read_r in ready:
+serialposix.py(491):                 if not ready:
+serialposix.py(493):                 buf = os.read(self.fd, size - len(read))
+serialposix.py(496):                 if not buf:
+serialposix.py(503):                 read.extend(buf)
+serialposix.py(516):             if timeout.expired():
+ --- modulename: serialutil, funcname: expired
+serialutil.py(135):         return self.target_time is not None and self.time_left() <= 0
+serialposix.py(481):         while len(read) < size:
+serialposix.py(518):         return bytes(read)
+myo_raw.py(85):             if not c: return None
+myo_raw.py(87):             ret = self.proc_byte(ord(c))
+ --- modulename: myo_raw, funcname: proc_byte
+myo_raw.py(103):         if not self.buf:
+myo_raw.py(107):         elif len(self.buf) == 1:
+myo_raw.py(112):             self.buf.append(c)
+myo_raw.py(114):         if self.packet_len and len(self.buf) == self.packet_len:
+myo_raw.py(118):         return None
+myo_raw.py(88):             if ret:
+myo_raw.py(82):         while timeout is None or time.time() < t0 + timeout:
+myo_raw.py(83):             if timeout is not None: self.ser.timeout = t0 + timeout - time.time()
+myo_raw.py(84):             c = self.ser.read()
+ --- modulename: serialposix, funcname: read
+serialposix.py(477):         if not self.is_open:
+serialposix.py(479):         read = bytearray()
+serialposix.py(480):         timeout = Timeout(self._timeout)
+ --- modulename: serialutil, funcname: __init__
+serialutil.py(125):         self.is_infinite = (duration is None)
+serialutil.py(126):         self.is_non_blocking = (duration == 0)
+serialutil.py(127):         self.duration = duration
+serialutil.py(128):         if duration is not None:
+serialutil.py(131):             self.target_time = None
+serialposix.py(481):         while len(read) < size:
+serialposix.py(482):             try:
+serialposix.py(483):                 ready, _, _ = select.select([self.fd, self.pipe_abort_read_r], [], [], timeout.time_left())
+ --- modulename: serialutil, funcname: time_left
+serialutil.py(139):         if self.is_non_blocking:
+serialutil.py(141):         elif self.is_infinite:
+serialutil.py(142):             return None
+serialposix.py(484):                 if self.pipe_abort_read_r in ready:
+serialposix.py(491):                 if not ready:
+serialposix.py(493):                 buf = os.read(self.fd, size - len(read))
+serialposix.py(496):                 if not buf:
+serialposix.py(503):                 read.extend(buf)
+serialposix.py(516):             if timeout.expired():
+ --- modulename: serialutil, funcname: expired
+serialutil.py(135):         return self.target_time is not None and self.time_left() <= 0
+serialposix.py(481):         while len(read) < size:
+serialposix.py(518):         return bytes(read)
+myo_raw.py(85):             if not c: return None
+myo_raw.py(87):             ret = self.proc_byte(ord(c))
+ --- modulename: myo_raw, funcname: proc_byte
+myo_raw.py(103):         if not self.buf:
+myo_raw.py(107):         elif len(self.buf) == 1:
+myo_raw.py(112):             self.buf.append(c)
+myo_raw.py(114):         if self.packet_len and len(self.buf) == self.packet_len:
+myo_raw.py(118):         return None
+myo_raw.py(88):             if ret:
+myo_raw.py(82):         while timeout is None or time.time() < t0 + timeout:
+myo_raw.py(83):             if timeout is not None: self.ser.timeout = t0 + timeout - time.time()
+myo_raw.py(84):             c = self.ser.read()
+ --- modulename: serialposix, funcname: read
+serialposix.py(477):         if not self.is_open:
+serialposix.py(479):         read = bytearray()
+serialposix.py(480):         timeout = Timeout(self._timeout)
+ --- modulename: serialutil, funcname: __init__
+serialutil.py(125):         self.is_infinite = (duration is None)
+serialutil.py(126):         self.is_non_blocking = (duration == 0)
+serialutil.py(127):         self.duration = duration
+serialutil.py(128):         if duration is not None:
+serialutil.py(131):             self.target_time = None
+serialposix.py(481):         while len(read) < size:
+serialposix.py(482):             try:
+serialposix.py(483):                 ready, _, _ = select.select([self.fd, self.pipe_abort_read_r], [], [], timeout.time_left())
+ --- modulename: serialutil, funcname: time_left
+serialutil.py(139):         if self.is_non_blocking:
+serialutil.py(141):         elif self.is_infinite:
+serialutil.py(142):             return None
+serialposix.py(484):                 if self.pipe_abort_read_r in ready:
+serialposix.py(491):                 if not ready:
+serialposix.py(493):                 buf = os.read(self.fd, size - len(read))
+serialposix.py(496):                 if not buf:
+serialposix.py(503):                 read.extend(buf)
+serialposix.py(516):             if timeout.expired():
+ --- modulename: serialutil, funcname: expired
+serialutil.py(135):         return self.target_time is not None and self.time_left() <= 0
+serialposix.py(481):         while len(read) < size:
+serialposix.py(518):         return bytes(read)
+myo_raw.py(85):             if not c: return None
+myo_raw.py(87):             ret = self.proc_byte(ord(c))
+ --- modulename: myo_raw, funcname: proc_byte
+myo_raw.py(103):         if not self.buf:
+myo_raw.py(107):         elif len(self.buf) == 1:
+myo_raw.py(112):             self.buf.append(c)
+myo_raw.py(114):         if self.packet_len and len(self.buf) == self.packet_len:
+myo_raw.py(118):         return None
+myo_raw.py(88):             if ret:
+myo_raw.py(82):         while timeout is None or time.time() < t0 + timeout:
+myo_raw.py(83):             if timeout is not None: self.ser.timeout = t0 + timeout - time.time()
+myo_raw.py(84):             c = self.ser.read()
+ --- modulename: serialposix, funcname: read
+serialposix.py(477):         if not self.is_open:
+serialposix.py(479):         read = bytearray()
+serialposix.py(480):         timeout = Timeout(self._timeout)
+ --- modulename: serialutil, funcname: __init__
+serialutil.py(125):         self.is_infinite = (duration is None)
+serialutil.py(126):         self.is_non_blocking = (duration == 0)
+serialutil.py(127):         self.duration = duration
+serialutil.py(128):         if duration is not None:
+serialutil.py(131):             self.target_time = None
+serialposix.py(481):         while len(read) < size:
+serialposix.py(482):             try:
+serialposix.py(483):                 ready, _, _ = select.select([self.fd, self.pipe_abort_read_r], [], [], timeout.time_left())
+ --- modulename: serialutil, funcname: time_left
+serialutil.py(139):         if self.is_non_blocking:
+serialutil.py(141):         elif self.is_infinite:
+serialutil.py(142):             return None
+serialposix.py(484):                 if self.pipe_abort_read_r in ready:
+serialposix.py(491):                 if not ready:
+serialposix.py(493):                 buf = os.read(self.fd, size - len(read))
+serialposix.py(496):                 if not buf:
+serialposix.py(503):                 read.extend(buf)
+serialposix.py(516):             if timeout.expired():
+ --- modulename: serialutil, funcname: expired
+serialutil.py(135):         return self.target_time is not None and self.time_left() <= 0
+serialposix.py(481):         while len(read) < size:
+serialposix.py(518):         return bytes(read)
+myo_raw.py(85):             if not c: return None
+myo_raw.py(87):             ret = self.proc_byte(ord(c))
+ --- modulename: myo_raw, funcname: proc_byte
+myo_raw.py(103):         if not self.buf:
+myo_raw.py(107):         elif len(self.buf) == 1:
+myo_raw.py(112):             self.buf.append(c)
+myo_raw.py(114):         if self.packet_len and len(self.buf) == self.packet_len:
+myo_raw.py(118):         return None
+myo_raw.py(88):             if ret:
+myo_raw.py(82):         while timeout is None or time.time() < t0 + timeout:
+myo_raw.py(83):             if timeout is not None: self.ser.timeout = t0 + timeout - time.time()
+myo_raw.py(84):             c = self.ser.read()
+ --- modulename: serialposix, funcname: read
+serialposix.py(477):         if not self.is_open:
+serialposix.py(479):         read = bytearray()
+serialposix.py(480):         timeout = Timeout(self._timeout)
+ --- modulename: serialutil, funcname: __init__
+serialutil.py(125):         self.is_infinite = (duration is None)
+serialutil.py(126):         self.is_non_blocking = (duration == 0)
+serialutil.py(127):         self.duration = duration
+serialutil.py(128):         if duration is not None:
+serialutil.py(131):             self.target_time = None
+serialposix.py(481):         while len(read) < size:
+serialposix.py(482):             try:
+serialposix.py(483):                 ready, _, _ = select.select([self.fd, self.pipe_abort_read_r], [], [], timeout.time_left())
+ --- modulename: serialutil, funcname: time_left
+serialutil.py(139):         if self.is_non_blocking:
+serialutil.py(141):         elif self.is_infinite:
+serialutil.py(142):             return None
+serialposix.py(484):                 if self.pipe_abort_read_r in ready:
+serialposix.py(491):                 if not ready:
+serialposix.py(493):                 buf = os.read(self.fd, size - len(read))
+serialposix.py(496):                 if not buf:
+serialposix.py(503):                 read.extend(buf)
+serialposix.py(516):             if timeout.expired():
+ --- modulename: serialutil, funcname: expired
+serialutil.py(135):         return self.target_time is not None and self.time_left() <= 0
+serialposix.py(481):         while len(read) < size:
+serialposix.py(518):         return bytes(read)
+myo_raw.py(85):             if not c: return None
+myo_raw.py(87):             ret = self.proc_byte(ord(c))
+ --- modulename: myo_raw, funcname: proc_byte
+myo_raw.py(103):         if not self.buf:
+myo_raw.py(107):         elif len(self.buf) == 1:
+myo_raw.py(112):             self.buf.append(c)
+myo_raw.py(114):         if self.packet_len and len(self.buf) == self.packet_len:
+myo_raw.py(118):         return None
+myo_raw.py(88):             if ret:
+myo_raw.py(82):         while timeout is None or time.time() < t0 + timeout:
+myo_raw.py(83):             if timeout is not None: self.ser.timeout = t0 + timeout - time.time()
+myo_raw.py(84):             c = self.ser.read()
+ --- modulename: serialposix, funcname: read
+serialposix.py(477):         if not self.is_open:
+serialposix.py(479):         read = bytearray()
+serialposix.py(480):         timeout = Timeout(self._timeout)
+ --- modulename: serialutil, funcname: __init__
+serialutil.py(125):         self.is_infinite = (duration is None)
+serialutil.py(126):         self.is_non_blocking = (duration == 0)
+serialutil.py(127):         self.duration = duration
+serialutil.py(128):         if duration is not None:
+serialutil.py(131):             self.target_time = None
+serialposix.py(481):         while len(read) < size:
+serialposix.py(482):             try:
+serialposix.py(483):                 ready, _, _ = select.select([self.fd, self.pipe_abort_read_r], [], [], timeout.time_left())
+ --- modulename: serialutil, funcname: time_left
+serialutil.py(139):         if self.is_non_blocking:
+serialutil.py(141):         elif self.is_infinite:
+serialutil.py(142):             return None
+serialposix.py(484):                 if self.pipe_abort_read_r in ready:
+serialposix.py(491):                 if not ready:
+serialposix.py(493):                 buf = os.read(self.fd, size - len(read))
+serialposix.py(496):                 if not buf:
+serialposix.py(503):                 read.extend(buf)
+serialposix.py(516):             if timeout.expired():
+ --- modulename: serialutil, funcname: expired
+serialutil.py(135):         return self.target_time is not None and self.time_left() <= 0
+serialposix.py(481):         while len(read) < size:
+serialposix.py(518):         return bytes(read)
+myo_raw.py(85):             if not c: return None
+myo_raw.py(87):             ret = self.proc_byte(ord(c))
+ --- modulename: myo_raw, funcname: proc_byte
+myo_raw.py(103):         if not self.buf:
+myo_raw.py(107):         elif len(self.buf) == 1:
+myo_raw.py(112):             self.buf.append(c)
+myo_raw.py(114):         if self.packet_len and len(self.buf) == self.packet_len:
+myo_raw.py(118):         return None
+myo_raw.py(88):             if ret:
+myo_raw.py(82):         while timeout is None or time.time() < t0 + timeout:
+myo_raw.py(83):             if timeout is not None: self.ser.timeout = t0 + timeout - time.time()
+myo_raw.py(84):             c = self.ser.read()
+ --- modulename: serialposix, funcname: read
+serialposix.py(477):         if not self.is_open:
+serialposix.py(479):         read = bytearray()
+serialposix.py(480):         timeout = Timeout(self._timeout)
+ --- modulename: serialutil, funcname: __init__
+serialutil.py(125):         self.is_infinite = (duration is None)
+serialutil.py(126):         self.is_non_blocking = (duration == 0)
+serialutil.py(127):         self.duration = duration
+serialutil.py(128):         if duration is not None:
+serialutil.py(131):             self.target_time = None
+serialposix.py(481):         while len(read) < size:
+serialposix.py(482):             try:
+serialposix.py(483):                 ready, _, _ = select.select([self.fd, self.pipe_abort_read_r], [], [], timeout.time_left())
+ --- modulename: serialutil, funcname: time_left
+serialutil.py(139):         if self.is_non_blocking:
+serialutil.py(141):         elif self.is_infinite:
+serialutil.py(142):             return None
+serialposix.py(484):                 if self.pipe_abort_read_r in ready:
+serialposix.py(491):                 if not ready:
+serialposix.py(493):                 buf = os.read(self.fd, size - len(read))
+serialposix.py(496):                 if not buf:
+serialposix.py(503):                 read.extend(buf)
+serialposix.py(516):             if timeout.expired():
+ --- modulename: serialutil, funcname: expired
+serialutil.py(135):         return self.target_time is not None and self.time_left() <= 0
+serialposix.py(481):         while len(read) < size:
+serialposix.py(518):         return bytes(read)
+myo_raw.py(85):             if not c: return None
+myo_raw.py(87):             ret = self.proc_byte(ord(c))
+ --- modulename: myo_raw, funcname: proc_byte
+myo_raw.py(103):         if not self.buf:
+myo_raw.py(107):         elif len(self.buf) == 1:
+myo_raw.py(112):             self.buf.append(c)
+myo_raw.py(114):         if self.packet_len and len(self.buf) == self.packet_len:
+myo_raw.py(118):         return None
+myo_raw.py(88):             if ret:
+myo_raw.py(82):         while timeout is None or time.time() < t0 + timeout:
+myo_raw.py(83):             if timeout is not None: self.ser.timeout = t0 + timeout - time.time()
+myo_raw.py(84):             c = self.ser.read()
+ --- modulename: serialposix, funcname: read
+serialposix.py(477):         if not self.is_open:
+serialposix.py(479):         read = bytearray()
+serialposix.py(480):         timeout = Timeout(self._timeout)
+ --- modulename: serialutil, funcname: __init__
+serialutil.py(125):         self.is_infinite = (duration is None)
+serialutil.py(126):         self.is_non_blocking = (duration == 0)
+serialutil.py(127):         self.duration = duration
+serialutil.py(128):         if duration is not None:
+serialutil.py(131):             self.target_time = None
+serialposix.py(481):         while len(read) < size:
+serialposix.py(482):             try:
+serialposix.py(483):                 ready, _, _ = select.select([self.fd, self.pipe_abort_read_r], [], [], timeout.time_left())
+ --- modulename: serialutil, funcname: time_left
+serialutil.py(139):         if self.is_non_blocking:
+serialutil.py(141):         elif self.is_infinite:
+serialutil.py(142):             return None
+serialposix.py(484):                 if self.pipe_abort_read_r in ready:
+serialposix.py(491):                 if not ready:
+serialposix.py(493):                 buf = os.read(self.fd, size - len(read))
+serialposix.py(496):                 if not buf:
+serialposix.py(503):                 read.extend(buf)
+serialposix.py(516):             if timeout.expired():
+ --- modulename: serialutil, funcname: expired
+serialutil.py(135):         return self.target_time is not None and self.time_left() <= 0
+serialposix.py(481):         while len(read) < size:
+serialposix.py(518):         return bytes(read)
+myo_raw.py(85):             if not c: return None
+myo_raw.py(87):             ret = self.proc_byte(ord(c))
+ --- modulename: myo_raw, funcname: proc_byte
+myo_raw.py(103):         if not self.buf:
+myo_raw.py(107):         elif len(self.buf) == 1:
+myo_raw.py(112):             self.buf.append(c)
+myo_raw.py(114):         if self.packet_len and len(self.buf) == self.packet_len:
+myo_raw.py(115):             p = Packet(self.buf)
+ --- modulename: myo_raw, funcname: __init__
+myo_raw.py(59):         self.typ = ords[0]
+myo_raw.py(60):         self.cls = ords[2]
+myo_raw.py(61):         self.cmd = ords[3]
+myo_raw.py(62):         self.payload = multichr(ords[4:])
+ --- modulename: myo_raw, funcname: multichr
+myo_raw.py(27):     if sys.version_info[0] >= 3:
+myo_raw.py(28):         return bytes(ords)
+myo_raw.py(116):             self.buf = []
+myo_raw.py(117):             return p
+myo_raw.py(88):             if ret:
+myo_raw.py(89):                 if ret.typ == 0x80:
+myo_raw.py(90):                     self.handle_event(ret)
+ --- modulename: myo_raw, funcname: handle_event
+myo_raw.py(121):         for h in self.handlers:
+myo_raw.py(122):             h(p)
+ --- modulename: myo_raw, funcname: handle_data
+myo_raw.py(281):             if (p.cls, p.cmd) != (4, 5): return
+myo_raw.py(283):             c, attr, typ = unpack('BHB', p.payload[:4])
+ --- modulename: common, funcname: unpack
+common.py(7):     return struct.unpack('<' + fmt, *args)
+myo_raw.py(284):             pay = p.payload[5:]
+myo_raw.py(286):             if attr == 0x27:
+myo_raw.py(287):                 vals = unpack('8HB', pay)
+ --- modulename: common, funcname: unpack
+common.py(7):     return struct.unpack('<' + fmt, *args)
+myo_raw.py(291):                 emg = vals[:8]
+myo_raw.py(292):                 moving = vals[8]
+myo_raw.py(293):                 self.on_emg(emg, moving)
+ --- modulename: myo_raw, funcname: on_emg
+myo_raw.py(395):         for h in self.emg_handlers:
+myo_raw.py(396):             h(emg, moving)
+ --- modulename: myo, funcname: emg_handler
+myo.py(82):         y = self.cls.classify(emg)
+ --- modulename: myo, funcname: classify
+myo.py(60):         if self.X.shape[0] < K * SUBSAMPLE: return 0
+myo.py(61):         if not HAVE_SK: return self.nearest(d)
+ --- modulename: myo, funcname: nearest
+myo.py(55):         dists = ((self.X - d)**2).sum(1)
+ --- modulename: _methods, funcname: _sum
+_methods.py(32):     return umr_sum(a, axis, dtype, out, keepdims)
+myo.py(56):         ind = dists.argmin()
+myo.py(57):         return self.Y[ind]
+myo.py(83):         self.history_cnt[self.history[0]] -= 1
+myo.py(84):         self.history_cnt[y] += 1
+myo.py(85):         self.history.append(y)
+myo.py(87):         r, n = self.history_cnt.most_common(1)[0]
+ --- modulename: __init__, funcname: most_common
+__init__.py(551):         if n is None:
+__init__.py(553):         return _heapq.nlargest(n, self.items(), key=_itemgetter(1))
+ --- modulename: heapq, funcname: nlargest
+heapq.py(531):     if n == 1:
+heapq.py(532):         it = iter(iterable)
+heapq.py(533):         sentinel = object()
+heapq.py(534):         if key is None:
+heapq.py(537):             result = max(it, default=sentinel, key=key)
+heapq.py(538):         return [] if result is sentinel else [result]
+myo.py(88):         if self.last_pose is None or (n > self.history_cnt[self.last_pose] + 5 and n > Myo.HIST_LEN / 2):
+myo_raw.py(395):         for h in self.emg_handlers:
+myo_raw.py(396):             h(emg, moving)
+ --- modulename: classify_myo, funcname: __call__
+classify_myo.py(36):         self.emg = emg
+classify_myo.py(37):         if self.recording >= 0:
+myo_raw.py(395):         for h in self.emg_handlers:
+myo_raw.py(121):         for h in self.handlers:
+myo_raw.py(91):                 return ret
+classify_myo.py(101): while display.IsOpen():
+classify_myo.py(103): 	img, width, height = camera.CaptureRGBA()
+classify_myo.py(106): 	detections = net.Detect(img, width, height, opt.overlay)
+classify_myo.py(115): 	display.RenderOnce(img, width, height)
+classify_myo.py(118): 	display.SetTitle("{:s} | Network {:.0f} FPS".format(opt.network, net.GetNetworkFPS()))
+classify_myo.py(123): 	print("I should be looping")
+I should be looping
+classify_myo.py(124): 	m.run()
+ --- modulename: myo_raw, funcname: run
+myo_raw.py(205):         self.bt.recv_packet(timeout)
+ --- modulename: myo_raw, funcname: recv_packet
+myo_raw.py(80):         t0 = time.time()
+myo_raw.py(81):         self.ser.timeout = None
+ --- modulename: serialutil, funcname: timeout
+serialutil.py(359):         if timeout is not None:
+serialutil.py(366):         self._timeout = timeout
+serialutil.py(367):         if self.is_open:
+serialutil.py(368):             self._reconfigure_port()
+ --- modulename: serialposix, funcname: _reconfigure_port
+serialposix.py(303):         if self.fd is None:
+serialposix.py(307):         if self._exclusive is not None:
+serialposix.py(316):         custom_baud = None
+serialposix.py(318):         vmin = vtime = 0                # timeout is done via select
+serialposix.py(319):         if self._inter_byte_timeout is not None:
+serialposix.py(322):         try:
+serialposix.py(323):             orig_attr = termios.tcgetattr(self.fd)
+serialposix.py(324):             iflag, oflag, cflag, lflag, ispeed, ospeed, cc = orig_attr
+serialposix.py(328):         cflag |= (termios.CLOCAL | termios.CREAD)
+serialposix.py(329):         lflag &= ~(termios.ICANON | termios.ECHO | termios.ECHOE |
+serialposix.py(331):                    termios.ISIG | termios.IEXTEN)  # |termios.ECHOPRT
+serialposix.py(332):         for flag in ('ECHOCTL', 'ECHOKE'):  # netbsd workaround for Erk
+serialposix.py(333):             if hasattr(termios, flag):
+serialposix.py(334):                 lflag &= ~getattr(termios, flag)
+serialposix.py(332):         for flag in ('ECHOCTL', 'ECHOKE'):  # netbsd workaround for Erk
+serialposix.py(333):             if hasattr(termios, flag):
+serialposix.py(334):                 lflag &= ~getattr(termios, flag)
+serialposix.py(332):         for flag in ('ECHOCTL', 'ECHOKE'):  # netbsd workaround for Erk
+serialposix.py(336):         oflag &= ~(termios.OPOST | termios.ONLCR | termios.OCRNL)
+serialposix.py(337):         iflag &= ~(termios.INLCR | termios.IGNCR | termios.ICRNL | termios.IGNBRK)
+serialposix.py(338):         if hasattr(termios, 'IUCLC'):
+serialposix.py(339):             iflag &= ~termios.IUCLC
+serialposix.py(340):         if hasattr(termios, 'PARMRK'):
+serialposix.py(341):             iflag &= ~termios.PARMRK
+serialposix.py(344):         try:
+serialposix.py(345):             ispeed = ospeed = getattr(termios, 'B{}'.format(self._baudrate))
+serialposix.py(362):         cflag &= ~termios.CSIZE
+serialposix.py(363):         if self._bytesize == 8:
+serialposix.py(364):             cflag |= termios.CS8
+serialposix.py(374):         if self._stopbits == serial.STOPBITS_ONE:
+serialposix.py(375):             cflag &= ~(termios.CSTOPB)
+serialposix.py(383):         iflag &= ~(termios.INPCK | termios.ISTRIP)
+serialposix.py(384):         if self._parity == serial.PARITY_NONE:
+serialposix.py(385):             cflag &= ~(termios.PARENB | termios.PARODD | CMSPAR)
+serialposix.py(401):         if hasattr(termios, 'IXANY'):
+serialposix.py(402):             if self._xonxoff:
+serialposix.py(405):                 iflag &= ~(termios.IXON | termios.IXOFF | termios.IXANY)
+serialposix.py(412):         if hasattr(termios, 'CRTSCTS'):
+serialposix.py(413):             if self._rtscts:
+serialposix.py(416):                 cflag &= ~(termios.CRTSCTS)
+serialposix.py(426):         if vmin < 0 or vmin > 255:
+serialposix.py(428):         cc[termios.VMIN] = vmin
+serialposix.py(430):         if vtime < 0 or vtime > 255:
+serialposix.py(432):         cc[termios.VTIME] = vtime
+serialposix.py(434):         if force_update or [iflag, oflag, cflag, lflag, ispeed, ospeed, cc] != orig_attr:
+serialposix.py(441):         if custom_baud is not None:
+serialposix.py(444):         if self._rs485_mode is not None:
+myo_raw.py(82):         while timeout is None or time.time() < t0 + timeout:
+myo_raw.py(83):             if timeout is not None: self.ser.timeout = t0 + timeout - time.time()
+myo_raw.py(84):             c = self.ser.read()
+ --- modulename: serialposix, funcname: read
+serialposix.py(477):         if not self.is_open:
+serialposix.py(479):         read = bytearray()
+serialposix.py(480):         timeout = Timeout(self._timeout)
+ --- modulename: serialutil, funcname: __init__
+serialutil.py(125):         self.is_infinite = (duration is None)
+serialutil.py(126):         self.is_non_blocking = (duration == 0)
+serialutil.py(127):         self.duration = duration
+serialutil.py(128):         if duration is not None:
+serialutil.py(131):             self.target_time = None
+serialposix.py(481):         while len(read) < size:
+serialposix.py(482):             try:
+serialposix.py(483):                 ready, _, _ = select.select([self.fd, self.pipe_abort_read_r], [], [], timeout.time_left())
+ --- modulename: serialutil, funcname: time_left
+serialutil.py(139):         if self.is_non_blocking:
+serialutil.py(141):         elif self.is_infinite:
+serialutil.py(142):             return None
+
