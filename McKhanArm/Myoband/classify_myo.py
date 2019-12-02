@@ -66,10 +66,14 @@ if __name__ == '__main__':
             #********************************************
             #********* This is the grip output **********
             r = m.history_cnt.most_common(1)[0][0] 
-            #********************************************
-            
+            #******** This is the grip certainty ********
+            grip_cert = sum(m.history_cnt.values())
+            #********************************************            
+
+
             # view the output in the console
             print('Current grip value {}'.format(int(r)), end='\r')
+            print('Current certainty {}'.format(int(grip_cert)), end='\r')
 
             if HAVE_PYGAME:
                 for ev in pygame.event.get():
