@@ -76,11 +76,10 @@ class BT(object):
         self.handlers = []
 
     ## internal data-handling methods
-    def recv_packet(self, timeout=100):
+    def recv_packet(self, timeout=None):
         t0 = time.time()
         self.ser.timeout = None
         while timeout is None or time.time() < t0 + timeout:
-            print("IM STUCK SEND HELP")
             if timeout is not None: self.ser.timeout = t0 + timeout - time.time()
             c = self.ser.read()
             if not c: return None
@@ -91,7 +90,7 @@ class BT(object):
                     self.handle_event(ret)
                 return ret
 
-    def recv_packets(self, timeout=1):
+    def recv_packets(self, timeout=.5):
         res = []
         t0 = time.time()
         while time.time() < t0 + timeout:

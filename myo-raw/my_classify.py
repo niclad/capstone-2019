@@ -4,11 +4,10 @@ from collections import Counter
 import struct
 import sys
 import time
-import numpy as np
 
-# import the Grip class
-sys.path.insert(1, '../misc/')
-from Grip import Grip
+import numpy as np
+from scipy import stats
+import serial
 
 try:
     from sklearn import neighbors, svm
@@ -38,6 +37,13 @@ class EMGHandler(object):
             self.m.cls.store_data(self.recording, emg)
 
 if __name__ == '__main__':
+
+    # list of grips
+    grip_vals = ['neutral  ', 
+			     'full     ',
+			     'pinch    ', 
+			     'extension']
+
     if HAVE_PYGAME:
         pygame.init()
         w, h = 800, 320
@@ -48,32 +54,32 @@ if __name__ == '__main__':
     hnd = EMGHandler(m)
     m.add_emg_handler(hnd)
     m.connect()
-
-    # display recommended grip outputs
-    print("When training the arm, here's a recommended mapping...")
-    print("Value: Grip")
-    print("0: Relaxed")
-    print("1: All extended")
-    print("2: Pinch")
-    print("3: Ball")
-    print("4: Mug")
-    print("5: Pencil")
-
+    #ser = serial.Serial('/dev/ttyACM0', int(9600)) # could be same port as myoband, so perhaps im screwing it up?
+    N_VALS = 250
+    prev_grips = np.zeros((100,), dtype=int)
+    gnum = 0
     try:
         while True:
             m.run()
+
+            # get the current grip value and add it to the list
+            r = m.history_cnt.most_common(1)[0][0]
+            prev_grips[gnum] = r
             
-            #********************************************
-            #********* This is the grip output **********
-            r = m.history_cnt.most_common(1)[0][0] 
-            #******** This is the grip certainty ********
-            grip_cert = m.history_cnt[r] * 4    # makes it a value out of 100 (max is 25, ie 25*4)
-            #********************************************            
+            if gnum % 10 == 0:
+                grip_modal_stats = stats.mode(prev_grips)    # get the mode of the grips
+                grip_mode = grip_modal_stats[0][0]              # get the actual modal value from mode()
+                num_mode = grip_modal_stats[1][0]               # get the number of values that equal the mode
 
+            # if the mode reaches a relatively high frequency, send that value
+            if num_mode >= 70:
+                bw = grip_mode      # send via serial (in a perfect world)
+                print(f"Value sent={bw}, grip={grip_vals[grip_mode]}", end="\r")    # print the grip and sent value
 
-            # view the output in the console
-            print(f'Current grip value {int(r)}, certainty {grip_cert} %', end='\r')
-            #print('Current certainty {}'.format(int(grip_cert)), end='\r')
+            # update the index value
+            gnum += 1
+            if gnum > 99:
+                gnum = 0    # reset the index value if it's !w/in grip_vals range
 
             if HAVE_PYGAME:
                 for ev in pygame.event.get():
@@ -122,8 +128,7 @@ if __name__ == '__main__':
                     if i == r: sys.stdout.write('\x1b[m')
                 sys.stdout.write('\x1b[11A')
                 print()
-            
-        print("") # add new line print
+
     except KeyboardInterrupt:
         pass
     finally:

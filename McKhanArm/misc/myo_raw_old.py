@@ -1,12 +1,3 @@
-'''
-	Original by dzhu
-		https://github.com/dzhu/myo-raw
-
-	Edited by Fernando Cosentino
-		http://www.fernandocosentino.net/pyoconnect
-'''
-
-
 from __future__ import print_function
 
 import enum
@@ -15,8 +6,6 @@ import struct
 import sys
 import threading
 import time
-import csv
-import datetime
 
 import serial
 from serial.tools.list_ports import comports
@@ -52,8 +41,9 @@ class Pose(enum.Enum):
     WAVE_OUT = 3
     FINGERS_SPREAD = 4
     THUMB_TO_PINKY = 5
-    UNKNOWN = 255	 
-    
+    UNKNOWN = 255
+
+
 class Packet(object):
     def __init__(self, ords):
         self.typ = ords[0]
@@ -76,11 +66,10 @@ class BT(object):
         self.handlers = []
 
     ## internal data-handling methods
-    def recv_packet(self, timeout=100):
+    def recv_packet(self, timeout=None):
         t0 = time.time()
         self.ser.timeout = None
         while timeout is None or time.time() < t0 + timeout:
-            print("IM STUCK SEND HELP")
             if timeout is not None: self.ser.timeout = t0 + timeout - time.time()
             c = self.ser.read()
             if not c: return None
@@ -91,7 +80,7 @@ class BT(object):
                     self.handle_event(ret)
                 return ret
 
-    def recv_packets(self, timeout=1):
+    def recv_packets(self, timeout=.5):
         res = []
         t0 = time.time()
         while time.time() < t0 + timeout:
@@ -299,7 +288,7 @@ class MyoRaw(object):
                 gyro = vals[7:10]
                 self.on_imu(quat, acc, gyro)
             elif attr == 0x23:
-                typ, val, xdir, _,_,_ = unpack('6B', pay)
+                typ, val, xdir, _,_,_ = unpack('3B', pay)
 
                 if typ == 1: # on arm
                     self.on_arm(Arm(val), XDirection(xdir))
@@ -332,7 +321,7 @@ class MyoRaw(object):
         '''
 
         self.write_attr(0x28, b'\x01\x00')
-        #self.write_attr(0x19, b'\x01\x03\x01\x01\x00')
+        self.write_attr(0x19, b'\x01\x03\x01\x01\x00')
         self.write_attr(0x19, b'\x01\x03\x01\x01\x01')
 
     def mc_start_collection(self):
@@ -421,22 +410,6 @@ if __name__ == '__main__':
         w, h = 1200, 400
         scr = pygame.display.set_mode((w, h))
 
-    # format the date and time:
-    dt = datetime.datetime.now()
-    yr = str(dt.year)
-    mo = str(dt.month)
-    day = str(dt.day)
-    hr = str(dt.hour)
-    mn = str(dt.minute)
-    dt = yr + mo + day + hr + mn
-
-    # open csvfile
-    fileName = 'emg_data_' + dt + '.csv'
-    csvFile = open(fileName, 'wb')
-    filewriter = csv.writer(csvFile, delimiter = ',')
-    emgNum = ['emg01', 'emg02', 'emg03', 'emg04', 'emg05', 'emg06', 'emg07', 'emg08']
-    filewriter.writerow(emgNum)
-
     last_vals = None
     def plot(scr, vals):
         DRAW_LINES = False
@@ -467,15 +440,9 @@ if __name__ == '__main__':
     m = MyoRaw(sys.argv[1] if len(sys.argv) >= 2 else None)
 
     def proc_emg(emg, moving, times=[]):
-        emgVals = []
-        for e in emg:
-            emgVals.append(e)
-        filewriter.writerow(emgVals)
-        print(type(emg))
         if HAVE_PYGAME:
             ## update pygame display
             plot(scr, [e / 2000. for e in emg])
-            print(emg)
         else:
             print(emg)
 
@@ -510,5 +477,3 @@ if __name__ == '__main__':
     finally:
         m.disconnect()
         print()
-
-    csvFile.close()

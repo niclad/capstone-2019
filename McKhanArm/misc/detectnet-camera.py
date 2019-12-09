@@ -1,44 +1,4 @@
 #!/usr/bin/python
-
-
-from __future__ import print_function
-
-from collections import Counter
-import struct
-import sys
-import time
-
-import numpy as np
-
-try:
-    from sklearn import neighbors, svm
-    HAVE_SK = True
-except ImportError:
-    HAVE_SK = False
-
-try:
-    import pygame
-    from pygame.locals import *
-    HAVE_PYGAME = True
-except ImportError:
-    HAVE_PYGAME = False
-
-from common import *
-import myo
-
-class EMGHandler(object):
-    def __init__(self, m):
-        self.recording = -1
-        self.m = m
-        self.emg = (0,) * 8
-
-    def __call__(self, emg, moving):
-        self.emg = emg
-        if self.recording >= 0:
-            self.m.cls.store_data(self.recording, emg)
-
-
-
 #
 # Copyright (c) 2019, NVIDIA CORPORATION. All rights reserved.
 #
@@ -72,7 +32,7 @@ parser = argparse.ArgumentParser(description="Locate objects in a live camera st
 						   formatter_class=argparse.RawTextHelpFormatter, epilog=jetson.inference.detectNet.Usage())
 
 parser.add_argument("--network", type=str, default="ssd-mobilenet-v2", help="pre-trained model to load (see below for options)")
-parser.add_argument("--overlay", type=str, default="box", help="detection overlay flags (e.g. --overlay=box,labels,conf)\nvalid combinations are:  'box', 'labels', 'conf', 'none'")
+parser.add_argument("--overlay", type=str, default="box,labels,conf", help="detection overlay flags (e.g. --overlay=box,labels,conf)\nvalid combinations are:  'box', 'labels', 'conf', 'none'")
 parser.add_argument("--threshold", type=float, default=0.5, help="minimum detection threshold to use") 
 parser.add_argument("--camera", type=str, default="0", help="index of the MIPI CSI camera to use (e.g. CSI camera 0)\nor for VL42 cameras, the /dev/video device to use.\nby default, MIPI CSI camera 0 will be used.")
 parser.add_argument("--width", type=int, default=1280, help="desired width of camera stream (default is 1280 pixels)")
@@ -87,23 +47,13 @@ except:
 
 # load the object detection network
 net = jetson.inference.detectNet(opt.network, sys.argv, opt.threshold)
+print(">>>>>>>" + str(opt.camera))
 
 # create the camera and display
 camera = jetson.utils.gstCamera(opt.width, opt.height, opt.camera)
 display = jetson.utils.glDisplay()
 
-m = myo.Myo(myo.NNClassifier(), None)
-hnd = EMGHandler(m)
-m.add_emg_handler(hnd)
-m.connect()
-m.run() # copied from line 130
-## IDEAS
-# 1. is it possible to the get the certainty from both the camera and the Myo obejct?
-# 2. if yes to the above, then use a threshold value decide the grip.
-# 3. 
-
 # process frames until user exits
-i = 0
 while display.IsOpen():
 	# capture the image
 	img, width, height = camera.CaptureRGBA()
@@ -112,10 +62,13 @@ while display.IsOpen():
 	detections = net.Detect(img, width, height, opt.overlay)
 
 	# print the detections
-	#print("detected {:d} objects in image".format(len(detections)))
+	print("detected {:d} objects in image".format(len(detections)))
 
-	#for detection in detections:
-	#	print(detection)
+	for detection in detections:
+		print("The object is:" + str(detection.Instance))
+		print("The class ID is: " + str(detection.ClassID))
+		print("The conf is: " + str(detection.Confidence))
+		print(detection)
 
 	# render the image
 	display.RenderOnce(img, width, height)
@@ -124,18 +77,5 @@ while display.IsOpen():
 	display.SetTitle("{:s} | Network {:.0f} FPS".format(opt.network, net.GetNetworkFPS()))
 
 	# print out performance info
-	#net.PrintProfilerTimes()
-
-	print("loop: " + str(i))
-	m.run()
-	i = i + 1
-
-	
-
-
-
-
-
-
-
+	net.PrintProfilerTimes()
 

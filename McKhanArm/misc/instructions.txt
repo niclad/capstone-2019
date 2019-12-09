@@ -1,0 +1,13 @@
+Training:
+	Plug in myoband bluetooth usb
+	Put on myoband
+	Run "python3 classify_myo.py"
+	Make gesture while holding key number 0-9 to save gesture
+	press q to quit.
+
+Gestures:
+	0 - close (Touch finger tips together)
+	1 - rest  (Relaxed fingers)
+	2 - open  (Spread fingers)
+	3 - pinch (Middle and pointer against thumb)
+	4 - fist  (All fingers closed and curled)

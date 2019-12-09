@@ -431,7 +431,7 @@ if __name__ == '__main__':
 
     # open csvfile
     fileName = 'emg_data_' + dt + '.csv'    # name the file
-    csvFile = open(fileName, 'wb')          # open the file
+    csvFile = open(fileName, 'w+')          # open the file
     filewriter = csv.writer(csvFile, delimiter = ',')   #  create a csv instance
     emgNum = ['time(s)', 'emg01', 'emg02', 'emg03', 'emg04', 'emg05', 'emg06', 'emg07', 'emg08'] # column titles
     filewriter.writerow(emgNum)             # write the column titles to the file
